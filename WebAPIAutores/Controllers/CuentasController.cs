@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WebAPIAutores.DTOs;
+using WebAPIAutores.Servicios;
 
 namespace WebAPIAutores.Controllers
 {
@@ -22,14 +23,16 @@ namespace WebAPIAutores.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly IConfiguration configuration;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly ServicioLlaves servicioLlaves;
 
         public CuentasController(UserManager<IdentityUser> userManager,
             IConfiguration configuration,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager, ServicioLlaves servicioLlaves)
         {
             this.userManager = userManager;
             this.configuration = configuration;
             this.signInManager = signInManager;
+            this.servicioLlaves = servicioLlaves;
         }
 
         [HttpPost("registrar")] // api/cuentas/registrar
@@ -40,6 +43,7 @@ namespace WebAPIAutores.Controllers
 
             if (resultado.Succeeded)
             {
+                await servicioLlaves.CrearLlave(usuario.Id, Entidades.TipoLlave.Gratuita);
                 return await ConstruirToken(credencialesUsuario, usuario.Id);
             }
             else
