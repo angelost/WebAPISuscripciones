@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using WebAPIAutores.DTOs;
 using WebAPIAutores.Entidades;
@@ -31,7 +32,16 @@ namespace WebAPIAutores.Middlewares
         public async Task InvokeAsync(HttpContext httpContext, ApplicationDbContext context)
         {
             var limitarPeticionesConfiguracion = new LimitarPeticionesConfiguracion();
-            configuration.GetRequiredSection("limitarPeticiones").Bind(limitarPeticionesConfiguracion);           
+            configuration.GetRequiredSection("limitarPeticiones").Bind(limitarPeticionesConfiguracion);
+
+            var ruta = httpContext.Request.Path.ToString();
+            var estaLaRutaEnListaBlanca = limitarPeticionesConfiguracion.ListaBlancaRutas.Any(x => ruta.Contains(x));
+
+            if (estaLaRutaEnListaBlanca)
+            {
+                await siguiente(httpContext);
+                return;
+            }
 
             var llaveStringValues = httpContext.Request.Headers["X-Api-Key"];
 
