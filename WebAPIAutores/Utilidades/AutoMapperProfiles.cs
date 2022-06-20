@@ -28,6 +28,8 @@ namespace WebAPIAutores.Utilidades
             CreateMap<Comentario, ComentarioDTO>();
 
             CreateMap<LlaveAPI, LlaveDTO>();
+
+            CreateMap<RestriccionDominio, RestriccionDominioDTO>();
         }
 
         private List<LibroDTO> MapAutorDTOLibros(Autor autor, AutorDTO autorDTO)
