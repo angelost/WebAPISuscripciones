@@ -1,14 +1,6 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
+USE [WebApisSuscripciones]
+GO
+/****** Object:  StoredProcedure [dbo].[CreacionFacturas]    Script Date: 20-06-2022 17:48:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,7 +10,7 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE CreacionFacturas 
+ALTER PROCEDURE [dbo].[CreacionFacturas] 
 	-- Add the parameters for the stored procedure here
 	@fechaInicio datetime,
 	@fechaFin datetime
@@ -54,4 +46,3 @@ BEGIN
 			when 1 then year(getdate())-1
 			else year(getdate()) end as Año
 END
-GO
