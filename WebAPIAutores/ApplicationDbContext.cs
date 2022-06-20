@@ -18,8 +18,8 @@ namespace WebAPIAutores
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<AutorLibro>()
-                .HasKey(al => new { al.AutorId, al.LibroId });
+            modelBuilder.Entity<AutorLibro>().HasKey(al => new { al.AutorId, al.LibroId });
+            modelBuilder.Entity<Factura>().Property(x => x.Monto).HasColumnType("decimal(18,2)");
 
         }
 
@@ -31,5 +31,7 @@ namespace WebAPIAutores
         public DbSet<Peticion> Peticiones { get; set; }
         public DbSet<RestriccionDominio> RestriccionesDominio { get; set; }
         public DbSet<RestriccionIP> RestriccionesIP { get; set; }
+        public DbSet<Factura> Facturas { get; set; }
+        public DbSet<FacturaEmitida> FacturasEmitidas { get; set; }
     }
 }
